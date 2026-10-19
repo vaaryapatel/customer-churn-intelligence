@@ -1,0 +1,11 @@
+venv/
+.venv/
+__pycache__/
+.env
+*.pyc
+.ipynb_checkpoints/
+models/*.pkl
+models/*.joblib
+data/*.db
+data/*.sqlite
+data/*.sqlite3
