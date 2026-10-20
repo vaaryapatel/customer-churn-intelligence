@@ -12,37 +12,58 @@ customers = pd.read_csv(RAW_DIR / "customer_info.csv")
 
 print("Original rows:", len(customers))
 
-# Remove rows that match across every column
+# Remove exact duplicates
 customers = customers.drop_duplicates()
+
 print("Rows after exact duplicate removal:", len(customers))
 
-# Find customer IDs that still have conflicting records
+# Identify conflicting customer IDs
 conflict_mask = customers["CustomerID"].duplicated(keep=False)
-conflicts = customers.loc[conflict_mask].sort_values("CustomerID")
 
-conflicts.to_csv(CLEAN_DIR / "customer_conflicts.csv", index=False)
+conflicts = customers.loc[conflict_mask].copy()
 
-# Keep unambiguous customer records only
-clean_customers = customers.loc[~conflict_mask].copy()
+conflicts.to_csv(
+    CLEAN_DIR / "customer_conflicts.csv",
+    index=False
+)
 
-# Convert signup dates to pandas datetime
+# Preserve one record per customer
+clean_customers = customers.drop_duplicates(
+    subset="CustomerID",
+    keep="first"
+).copy()
+
+# Set uncertain signup dates to missing
+conflicting_ids = set(conflicts["CustomerID"])
+
+clean_customers.loc[
+    clean_customers["CustomerID"].isin(conflicting_ids),
+    "SignupDate"
+] = pd.NA
+
+# Convert valid dates
 clean_customers["SignupDate"] = pd.to_datetime(
     clean_customers["SignupDate"],
     errors="coerce"
 )
 
-# Save cleaned customer data
+# Track missing ages without imputing them yet
+clean_customers["AgeMissing"] = (
+    clean_customers["Age"].isna().astype(int)
+)
+
+# Save cleaned data
 clean_customers.to_csv(
     CLEAN_DIR / "customer_info_clean.csv",
     index=False
 )
 
-print("\n--- CLEANING SUMMARY ---")
+print("\n--- FINAL CUSTOMER CLEANING SUMMARY ---")
 print("Clean customer rows:", len(clean_customers))
-print("Conflicting customer IDs:", conflicts["CustomerID"].nunique())
-print("Rows saved for conflict review:", len(conflicts))
-print("Invalid signup dates:", clean_customers["SignupDate"].isna().sum())
-print("Missing ages remaining:", clean_customers["Age"].isna().sum())
-print("\nSaved files:")
-print(CLEAN_DIR / "customer_info_clean.csv")
-print(CLEAN_DIR / "customer_conflicts.csv")
+print("Unique customer IDs:", clean_customers["CustomerID"].nunique())
+print("Conflicting customer IDs:", len(conflicting_ids))
+print("Missing signup dates:", clean_customers["SignupDate"].isna().sum())
+print("Missing ages:", clean_customers["Age"].isna().sum())
+print("AgeMissing column created:", "AgeMissing" in clean_customers.columns)
+
+print("\nCustomer cleaning completed!")
