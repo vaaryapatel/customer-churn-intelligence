@@ -1,11 +1,11 @@
 CustomerID,Age,Gender,Region,ContractType,MonthlyCharges,SignupDate
 CUST_248,22.0,Male,Rural,Monthly,58.85,2022-09-06
-CUST_248,22.0,Male,Rural,Monthly,58.85,2022-06-09
 CUST_308,37.0,Male,Urban,Monthly,42.28,2018-01-03
-CUST_308,37.0,Male,Urban,Monthly,42.28,2018-03-01
 CUST_333,,Male,Rural,Prepaid,63.64,2023-11-02
-CUST_333,,Male,Rural,Prepaid,63.64,2023-02-11
 CUST_391,,Female,Urban,Yearly,31.6,2023-11-03
-CUST_391,,Female,Urban,Yearly,31.6,2023-03-11
 CUST_466,23.0,Female,Urban,Monthly,45.18,2021-03-07
+CUST_248,22.0,Male,Rural,Monthly,58.85,2022-06-09
 CUST_466,23.0,Female,Urban,Monthly,45.18,2021-07-03
+CUST_333,,Male,Rural,Prepaid,63.64,2023-02-11
+CUST_308,37.0,Male,Urban,Monthly,42.28,2018-03-01
+CUST_391,,Female,Urban,Yearly,31.6,2023-03-11
