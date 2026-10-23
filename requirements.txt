@@ -3,10 +3,9 @@ numpy
 scikit-learn
 xgboost
 shap
-streamlit
-plotly
 matplotlib
-seaborn
 google-genai
 python-dotenv
 joblib
+fastapi
+uvicorn
