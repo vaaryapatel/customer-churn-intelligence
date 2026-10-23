@@ -1,25 +1,10 @@
+.env
 venv/
 .venv/
 __pycache__/
-.env
 *.pyc
-.ipynb_checkpoints/
-models/*.pkl
-models/*.joblib
-data/*.db
-data/*.sqlite
-data/*.sqlite3
-# Python environment
-venv/
-__pycache__/
-*.pyc
-
-# Secrets
-.env
-
-# Generated data
 data/processed/
-
-# Trained models
-models/*.pkl
-models/*.joblib
+reports/
+node_modules/
+.next/
+models/
